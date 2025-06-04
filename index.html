@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-<!-- Event snippet for Лид conversion page -->
 <script>
   gtag('event', 'conversion', {
       'send_to': 'AW-17155345980/gFQICKSWuNMaELycp_Q_',
@@ -10,8 +9,7 @@
   });
 </script>
 
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17155345980"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17155345980"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -469,7 +467,7 @@
     <section id="about" class="fade-in">
       <h2>Про нас</h2>
       <p>Ми — команда досвідчених юристів та фахівців, які глибоко розуміють українське законодавство та міжнародні норми, що стосуються перетину кордону чоловіками призовного віку. Наша діяльність розпочалася у відповідь на зростаючу потребу у кваліфікованій, законній та етичній допомозі у складних питаннях виїзду за кордон.</p>
-      <p>Наші основні цінності: <strong>прозорість, законність та індивідуальний підхід</strong>. Ми віримо, що кожен клієнт заслуговує на зрозумілу та чесну інформацію, а також на підтримку, яка враховує його унікальну ситуацію. Ми постійно відстежуємо зміни в законодавстві, щоб надавати найактуальніші та найефективніші рішення.</p>
+      <p>Наші основні цінності: **прозорість, законність та індивідуальний підхід**. Ми віримо, що кожен клієнт заслуговує на зрозумілу та чесну інформацію, а також на підтримку, яка враховує його унікальну ситуацію. Ми постійно відстежуємо зміни в законодавстві, щоб надавати найактуальніші та найефективніші рішення.</p>
       <p>Наша мета — не просто допомогти оформити документи, а забезпечити вам спокій та впевненість у законності кожного кроку. Звертаючись до нас, ви отримуєте надійного партнера, який супроводжуватиме вас від першої консультації до успішного вирішення вашого питання.</p>
     </section>
     <section id="services" class="fade-in">
@@ -549,13 +547,13 @@
     <section id="contact" class="fade-in">
       <h2>Зв’яжіться з нами</h2>
       <p>Заповніть форму, і ми вам зателефонуємо:</p>
-      <form id="contactForm"> 
+      <form id="contactForm">  
         <label for="name">Ім'я</label>
         <input type="text" id="name" name="name" required />
         <div id="nameError" class="error-message">Будь ласка, введіть ваше ім'я.</div>
 
         <label for="phone">Телефон</label>
-        <input type="tel" id="phone" name="phone" placeholder="+380XXXXXXXXX" required />
+        <input type="tel" id="phone" name="phone" value="+380" placeholder="+380XXXXXXXXX" required />
         <div id="phoneError" class="error-message">Будь ласка, введіть дійсний номер телефону (наприклад, +380XXXXXXXXX).</div>
 
         <button type="submit" id="submitButton">Надіслати</button>
@@ -600,124 +598,3 @@
       // Сбросить предыдущие ошибки
       nameInput.classList.remove('error');
       phoneInput.classList.remove('error');
-      nameError.style.display = 'none';
-      phoneError.style.display = 'none';
-
-      let isValid = true;
-
-      const name = nameInput.value.trim();
-      const phone = phoneInput.value.trim();
-
-      // Проверка имени
-      if (!name) {
-        nameInput.classList.add('error');
-        nameError.style.display = 'block';
-        isValid = false;
-      }
-
-      // Проверка номера телефона
-      // Регулярное выражение для +380XXXXXXXXX (12 цифр после +)
-      const phonePattern = /^\+380\d{9}$/; 
-      if (!phonePattern.test(phone)) {
-        phoneInput.classList.add('error');
-        phoneError.style.display = 'block';
-        isValid = false;
-      }
-
-      if (!isValid) {
-        return; // Остановить отправку формы, если есть ошибки
-      }
-
-      // Показати індикатор завантаження та вимкнути кнопку
-      submitButton.disabled = true;
-      submitButton.innerHTML = 'Надсилання... <span class="form-loading-spinner"></span>';
-
-      const backendUrl = '/.netlify/functions/send-telegram-message'; 
-
-      try {
-        const response = await fetch(backendUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ name: name, phone: phone })
-        });
-
-        const data = await response.json();
-
-        if (response.ok && data.success) {
-          // *** ВОТ ГЛАВНОЕ ИЗМЕНЕНИЕ: Перенаправляем на страницу "Спасибо" ***
-          window.location.href = 'thank-you.html'; 
-          // Событие Facebook Pixel 'Lead' будет отслеживаться на странице thank-you.html
-        } else {
-          alert(`Сталася помилка: ${data.message || 'Невідома помилка'}`);
-          console.error('Backend Error:', data.message || data);
-        }
-      } catch (error) {
-        alert('Сталася помилка при надсиланні запиту до сервера. Перевірте підключення або спробуйте пізніше.');
-        console.error('Network or Server Error:', error);
-      } finally {
-        // Если произойдет ошибка, то кнопка вернется в исходное состояние
-        // Если редирект успешен, эта часть кода не выполнится, так как страница изменится.
-        submitButton.disabled = false;
-        submitButton.innerHTML = 'Надіслати';
-      }
-    });
-
-    // *** УДАЛЕНЫ обработчики событий для закрытия модального окна, так как оно больше не используется. ***
-    // document.querySelector('#thankYouModal .close-button').addEventListener('click', function() {
-    //   document.getElementById('thankYouModal').style.display = 'none';
-    // });
-    // window.addEventListener('click', function(event) {
-    //   const thankYouModal = document.getElementById('thankYouModal');
-    //   if (event.target === thankYouModal) {
-    //     thankYouModal.style.display = 'none';
-    //   }
-    // });
-  </script>
-
-  <script>
-    // JavaScript для інтерактивності ЧАПів (розгортання/згортання)
-    document.querySelectorAll('.faq-toggle').forEach(button => {
-      button.addEventListener('click', () => {
-        const faqContent = button.parentNode.nextElementSibling; // Отримуємо елемент з відповіддю
-        button.classList.toggle('active');
-        faqContent.classList.toggle('active');
-
-        // Додаткова логіка для анімації висоти
-        if (faqContent.classList.contains('active')) {
-          faqContent.style.maxHeight = faqContent.scrollHeight + "px"; // Встановлюємо реальну висоту
-        } else {
-          faqContent.style.maxHeight = "0";
-        }
-      });
-    });
-
-    // JavaScript для анімації fade-in при прокручуванні
-    function onScrollReveal() {
-      const elements = document.querySelectorAll('.fade-in');
-      const triggerBottom = window.innerHeight * 0.85;
-      elements.forEach(el => {
-        const boxTop = el.getBoundingClientRect().top;
-        if (boxTop < triggerBottom) {
-          el.classList.add('visible');
-        }
-      });
-    }
-    window.addEventListener('scroll', onScrollReveal);
-    window.addEventListener('load', onScrollReveal); // Запускаємо при завантаженні для елементів, що вже у видимій області
-
-    // JavaScript для плавної прокрутки
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-          behavior: 'smooth'
-        });
-      });
-    });
-  </script>
-</body>
-
-</html>
