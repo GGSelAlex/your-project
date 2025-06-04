@@ -19,12 +19,12 @@
 </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Допомога чоловікам призовного віку виїхати за кордон - Юридична допомога з виїзду</title>
+  <title>Виїзд 2025: Допоможемо виїхати за кордон — індивідуальні рішення для кожного</title>
   <meta name="description" content="Комплексна юридична допомога чоловікам призовного віку у виїзді за кордон. Оформлення документів, білий квиток, інвалідність, бронювання. Законно та надійно." />
   <meta name="keywords" content="виїзд за кордон, чоловіки призовного віку, білий квиток, оформлення інвалідності, бронювання, юридична допомога, виїзд з України, перетин кордону, юрист з виїзду, відстрочка" />
   <meta name="author" content="Ваша Компанія" />
   
-  <meta property="og:title" content="Допомога чоловікам призовного віку у виїзді за кордон" />
+  <meta property="og:title" content="Виїзд 2025: Допоможемо виїхати за кордон — індивідуальні рішення для кожного" />
   <meta property="og:description" content="Комплексна юридична допомога чоловікам призовного віку у виїзді за кордон. Оформлення документів, білий квиток, інвалідність, бронювання. Законно та надійно." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://yourwebsite.com/" /> <meta property="og:image" content="https://yourwebsite.com/images/og-image.jpg" /> <meta property="og:locale" content="uk_UA" />
@@ -285,7 +285,7 @@
       z-index: 1000;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
       display: flex;
-      justify-content: center;
+      justify-content: space-between; /* Для розміщення бургера та меню */
       align-items: center;
     }
     .navbar ul {
@@ -310,6 +310,17 @@
     .navbar a:hover {
       color: #a7d9ff;
       border-bottom: 2px solid #a7d9ff;
+    }
+
+    /* Гамбургер-меню іконка */
+    .menu-toggle {
+      display: none; /* Приховано за замовчуванням на великих екранах */
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.8rem; /* Збільшений розмір для кращої видимості */
+      cursor: pointer;
+      padding: 5px 10px;
     }
 
     /* Стилі для CTA кнопок */
@@ -391,15 +402,42 @@
         font-size: 0.9rem;
         padding: 10px;
       }
+      
+      /* Мобільне меню */
+      .navbar {
+          flex-direction: row; /* Навігація в рядок */
+          justify-content: space-between; /* Рознести елементи */
+          padding: 10px 15px; /* Зменшуємо padding */
+      }
       .navbar ul {
-          flex-direction: column; /* Вертикальне меню на мобільних */
-          align-items: center;
+          display: none; /* Приховуємо меню за замовчуванням на мобільних */
+          flex-direction: column; /* Вертикальне меню */
+          width: 100%; /* Займає всю ширину */
+          position: absolute; /* Позиціонуємо абсолютно */
+          top: 100%; /* Під навігацією */
+          left: 0;
+          background: #005baa; /* Той самий фон */
+          box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      }
+      .navbar ul.active {
+          display: flex; /* Показуємо меню, коли активне */
       }
       .navbar li {
-          margin: 5px 0;
+          margin: 0;
+          width: 100%; /* Кожен пункт займає всю ширину */
+          text-align: center;
+          border-bottom: 1px solid rgba(255,255,255,0.1); /* Роздільник між пунктами */
       }
-      .navbar {
-          padding: 10px; /* Зменшуємо padding для набдару */
+      .navbar li:last-child {
+          border-bottom: none;
+      }
+      .navbar a {
+          display: block; /* Щоб посилання займало весь простір пункту меню */
+          padding: 10px 0;
+          border-bottom: none; /* Прибираємо нижню межу з посилань */
+      }
+      .menu-toggle {
+          display: block; /* Показуємо бургер-іконку */
       }
     }
 
@@ -444,7 +482,10 @@
     src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"
   /></noscript>
   <nav class="navbar">
-    <ul>
+    <button class="menu-toggle" id="menuToggle" aria-label="Відкрити меню">
+      <i class="fas fa-bars"></i>
+    </button>
+    <ul id="mainMenu">
       <li><a href="#mission">Наша Місія</a></li>
       <li><a href="#about">Про нас</a></li>
       <li><a href="#services">Послуги</a></li>
@@ -455,7 +496,7 @@
   </nav>
 
   <header>
-    <h1>Допоможемо чоловікам призовного віку виїхати за кордон</h1>
+    <h1>Виїзд 2025: Допоможемо виїхати за кордон — індивідуальні рішення для кожного</h1>
     <a href="#contact" class="cta-button header-cta">Отримати безкоштовну консультацію</a>
   </header>
   <main>
@@ -607,9 +648,9 @@
 
       // Проверка имени (только буквы)
       const namePattern = /^[А-Яа-яЄєІіЇїҐґ\s-']+$/; // Дозволяє українські літери, пробіли, дефіси та апострофи
-      if (!name || !namePattern.test(name)) { // Перевіряємо, чи ім'я не пусте та відповідає патерну
+      if (!name || !namePattern.test(name)) { 
         nameInput.classList.add('error');
-        nameError.textContent = 'Будь ласка, введіть ваше ім\'я (тільки літери).'; // Оновлюємо текст помилки
+        nameError.textContent = 'Будь ласка, введіть ваше ім\'я (тільки літери).'; 
         nameError.style.display = 'block';
         isValid = false;
       }
@@ -692,12 +733,33 @@
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
+        // Закриваємо меню після натискання на посилання
+        const mainMenu = document.getElementById('mainMenu');
+        const menuToggle = document.getElementById('menuToggle');
+        if (mainMenu.classList.contains('active')) {
+            mainMenu.classList.remove('active');
+            menuToggle.classList.remove('active'); // Оновити стан іконки
+        }
 
         document.querySelector(this.getAttribute('href')).scrollIntoView({
           behavior: 'smooth'
         });
       });
     });
+
+    // JavaScript для функціоналу гамбургер-меню
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.getElementById('menuToggle');
+      const mainMenu = document.getElementById('mainMenu');
+
+      if (menuToggle && mainMenu) {
+        menuToggle.addEventListener('click', function() {
+          mainMenu.classList.toggle('active');
+          menuToggle.classList.toggle('active'); // Оновити стан іконки
+        });
+      }
+    });
+
   </script>
 </body>
 
