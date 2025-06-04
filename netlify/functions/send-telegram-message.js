@@ -1,4 +1,3 @@
-const fetch = require('node-fetch'); // Для виконання HTTP-запитів до API Telegram
 
 exports.handler = async function(event, context) {
     // Перевіряємо, чи це POST-запит і чи є тіло
