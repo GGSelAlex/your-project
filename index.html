@@ -593,8 +593,110 @@
       const nameError = document.getElementById('nameError');
       const phoneError = document.getElementById('phoneError');
       const submitButton = document.getElementById('submitButton');
-      // const thankYouModal = document.getElementById('thankYouModal'); // ЭТОТ ЭЛЕМЕНТ БОЛЬШЕ НЕ НУЖЕН
 
       // Сбросить предыдущие ошибки
       nameInput.classList.remove('error');
       phoneInput.classList.remove('error');
+      nameError.style.display = 'none';
+      phoneError.style.display = 'none';
+
+      let isValid = true;
+
+      const name = nameInput.value.trim();
+      const phone = phoneInput.value.trim();
+
+      // Проверка имени
+      if (!name) {
+        nameInput.classList.add('error'); // Виправлено: додано .add('error')
+        nameError.style.display = 'block';
+        isValid = false;
+      }
+
+      // Проверка номера телефона
+      const phonePattern = /^\+380\d{9}$/;  
+      if (!phonePattern.test(phone)) {
+        phoneInput.classList.add('error');
+        phoneError.style.display = 'block';
+        isValid = false;
+      }
+
+      if (!isValid) {
+        return; // Остановить отправку формы, если есть ошибки
+      }
+
+      // Показати індикатор завантаження та вимкнути кнопку
+      submitButton.disabled = true;
+      submitButton.innerHTML = 'Надсилання... <span class="form-loading-spinner"></span>';
+
+      const backendUrl = '/.netlify/functions/send-telegram-message';  
+
+      try {
+        const response = await fetch(backendUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ name: name, phone: phone })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          window.location.href = 'thank-you.html';  
+        } else {
+          alert(`Сталася помилка: ${data.message || 'Невідома помилка'}`);
+          console.error('Backend Error:', data.message || data);
+        }
+      } catch (error) {
+        alert('Сталася помилка при надсиланні запиту до сервера. Перевірте підключення або спробуйте пізніше.');
+        console.error('Network or Server Error:', error);
+      } finally {
+        submitButton.disabled = false;
+        submitButton.innerHTML = 'Надіслати';
+      }
+    });
+
+    // JavaScript для інтерактивності ЧАПів (розгортання/згортання)
+    document.querySelectorAll('.faq-toggle').forEach(button => {
+      button.addEventListener('click', () => {
+        const faqContent = button.parentNode.nextElementSibling; // Отримуємо елемент з відповіддю
+        button.classList.toggle('active');
+        faqContent.classList.toggle('active');
+
+        // Додаткова логіка для анімації висоти
+        if (faqContent.classList.contains('active')) {
+          faqContent.style.maxHeight = faqContent.scrollHeight + "px"; // Встановлюємо реальну висоту
+        } else {
+          faqContent.style.maxHeight = "0";
+        }
+      });
+    });
+
+    // JavaScript для анімації fade-in при прокручуванні
+    function onScrollReveal() {
+      const elements = document.querySelectorAll('.fade-in');
+      const triggerBottom = window.innerHeight * 0.85;
+      elements.forEach(el => {
+        const boxTop = el.getBoundingClientRect().top;
+        if (boxTop < triggerBottom) {
+          el.classList.add('visible');
+        }
+      });
+    }
+    window.addEventListener('scroll', onScrollReveal);
+    window.addEventListener('load', onScrollReveal); // Запускаємо при завантаженні для елементів, що вже у видимій області
+
+    // JavaScript для плавної прокрутки
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>
