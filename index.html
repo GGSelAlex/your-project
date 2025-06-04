@@ -54,7 +54,7 @@
     input.error {border:2px solid red}
     .error-message {color:red;font-size:.9em;margin-top:-15px;margin-bottom:15px;display:none}
 
-    /* Enhanced CTA Button Styles */
+    /* Enhanced CTA Button Styles (general for "Отримати консультацію" etc.) */
     .cta-button {
       background: #2ECC71; /* Brighter green */
       color: white;
@@ -81,6 +81,42 @@
     .header-cta {
       margin-bottom: 25px; /* Adjust if needed */
     }
+
+    /* New, improved style for the form submit button */
+    #contactForm button[type="submit"] {
+      background: #007ACC; /* Bright blue color that attracts attention */
+      color: white;
+      border: none;
+      padding: 15px 30px; /* More padding for better clickability */
+      font-size: 1.1rem; /* Clearer font size */
+      border-radius: 10px; /* Slightly more rounded corners */
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Add transform for animation */
+      box-shadow: 0 5px 15px rgba(0, 122, 204, 0.3); /* More pronounced shadow */
+      font-weight: 700; /* Bold font */
+      width: auto; /* Allows the button to take only the necessary width */
+      display: inline-block; /* For applying width: auto */
+    }
+
+    #contactForm button[type="submit"]:hover {
+      background: #005F99; /* Slightly darker blue on hover */
+      transform: translateY(-2px); /* Gentle lift of the button */
+      box-shadow: 0 8px 20px rgba(0, 122, 204, 0.4); /* Larger shadow on hover */
+    }
+
+    #contactForm button[type="submit"]:active {
+      transform: translateY(0); /* Return to original position on click */
+      box-shadow: 0 2px 5px rgba(0, 122, 204, 0.2); /* Smaller shadow on click */
+    }
+
+    /* Style for disabled button when submitting */
+    #contactForm button[type="submit"]:disabled {
+      background: #cccccc; /* Grey color when disabled */
+      cursor: not-allowed; /* Not allowed cursor */
+      box-shadow: none;
+      transform: none;
+    }
+
 
     footer {text-align:center;padding:20px;color:#777;border-top:1px solid #ccc;font-size:.9rem}
     footer a {color:#005baa;text-decoration:none}
@@ -210,7 +246,11 @@
       section{padding:15px}
       h2{font-size:1.2rem}
       .faq-toggle{font-size:.95rem}
-      .cta-button{font-size:1rem;padding:10px 20px}
+      /* Ensure submit button is properly styled on small screens too */
+      #contactForm button[type="submit"] {
+        font-size: 1rem;
+        padding: 10px 20px;
+      }
     }
   </style>
 </head>
@@ -410,11 +450,12 @@
         if (!phoneInput.value.startsWith('+380')) {
             phoneInput.value = '+380';
         }
+        // Set timeout to ensure cursor position is applied after default browser behavior
         setTimeout(() => {
             phoneInput.setSelectionRange(phoneInput.value.length, phoneInput.value.length);
         }, 0);
       });
-      // Initial check on load
+      // Initial check on load to set +380 if empty
       if (!phoneInput.value.startsWith('+380') && phoneInput.value.length === 0) {
           phoneInput.value = '+380';
       }
