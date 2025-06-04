@@ -550,7 +550,7 @@
       <form id="contactForm">  
         <label for="name">Ім'я</label>
         <input type="text" id="name" name="name" required />
-        <div id="nameError" class="error-message">Будь ласка, введіть ваше ім'я.</div>
+        <div id="nameError" class="error-message">Будь ласка, введіть ваше ім'я (тільки літери).</div>
 
         <label for="phone">Телефон</label>
         <input type="tel" id="phone" name="phone" value="+380" placeholder="+380XXXXXXXXX" required />
@@ -605,9 +605,11 @@
       const name = nameInput.value.trim();
       const phone = phoneInput.value.trim();
 
-      // Проверка имени
-      if (!name) {
-        nameInput.classList.add('error'); // Виправлено: додано .add('error')
+      // Проверка имени (только буквы)
+      const namePattern = /^[А-Яа-яЄєІіЇїҐґ\s-']+$/; // Дозволяє українські літери, пробіли, дефіси та апострофи
+      if (!name || !namePattern.test(name)) { // Перевіряємо, чи ім'я не пусте та відповідає патерну
+        nameInput.classList.add('error');
+        nameError.textContent = 'Будь ласка, введіть ваше ім\'я (тільки літери).'; // Оновлюємо текст помилки
         nameError.style.display = 'block';
         isValid = false;
       }
