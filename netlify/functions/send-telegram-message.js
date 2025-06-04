@@ -1,4 +1,4 @@
-const fetch = require('node-fetch'); // Возможно, вам все еще нужна эта строка, если вы не удалили 'node-fetch' из package.json и используете старую версию Node.js. Если вы обновили, то ее можно удалить.
+
 
 exports.handler = async function(event, context) {
     if (event.httpMethod !== 'POST' || !event.body) {
