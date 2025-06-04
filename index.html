@@ -78,6 +78,17 @@
       border-radius: 8px;
       font-size: 1rem;
     }
+    /* Добавляем стиль для полей с ошибкой */
+    input.error {
+        border: 2px solid red;
+    }
+    .error-message {
+        color: red;
+        font-size: 0.9em;
+        margin-top: -15px;
+        margin-bottom: 15px;
+        display: none; /* Скрыто по умолчанию */
+    }
     button {
       background: #007acc;
       color: white;
@@ -401,6 +412,21 @@
 </head>
 
 <body>
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', 'YOUR_PIXEL_ID'); // Замените YOUR_PIXEL_ID на ваш реальный ID пикселя Facebook
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"
+  /></noscript>
   <nav class="navbar">
     <ul>
       <li><a href="#mission">Наша Місія</a></li>
@@ -505,11 +531,14 @@
     <section id="contact" class="fade-in">
       <h2>Зв’яжіться з нами</h2>
       <p>Заповніть форму, і ми вам зателефонуємо:</p>
-      <form id="contactForm"> <label for="name">Ім'я</label>
+      <form id="contactForm"> 
+        <label for="name">Ім'я</label>
         <input type="text" id="name" name="name" required />
+        <div id="nameError" class="error-message">Будь ласка, введіть ваше ім'я.</div>
 
         <label for="phone">Телефон</label>
-        <input type="tel" id="phone" name="phone" required />
+        <input type="tel" id="phone" name="phone" placeholder="+380XXXXXXXXX" required />
+        <div id="phoneError" class="error-message">Будь ласка, введіть дійсний номер телефону (наприклад, +380XXXXXXXXX).</div>
 
         <button type="submit" id="submitButton">Надіслати</button>
       </form>
@@ -540,22 +569,51 @@
   </footer>
 
   <script>
-    document.getElementById('contactForm').addEventListener('submit', async function(e){ // Изменено: async function
+    document.getElementById('contactForm').addEventListener('submit', async function(e){
       e.preventDefault();
-      const name = this.name.value.trim();
-      const phone = this.phone.value.trim();
+      
+      const nameInput = document.getElementById('name');
+      const phoneInput = document.getElementById('phone');
+      const nameError = document.getElementById('nameError');
+      const phoneError = document.getElementById('phoneError');
       const submitButton = document.getElementById('submitButton');
+      // const thankYouModal = document.getElementById('thankYouModal'); // ЭТОТ ЭЛЕМЕНТ БОЛЬШЕ НЕ НУЖЕН
 
-      if(!name || !phone) {
-        alert('Будь ласка, заповніть усі поля.');
-        return;
+      // Сбросить предыдущие ошибки
+      nameInput.classList.remove('error');
+      phoneInput.classList.remove('error');
+      nameError.style.display = 'none';
+      phoneError.style.display = 'none';
+
+      let isValid = true;
+
+      const name = nameInput.value.trim();
+      const phone = phoneInput.value.trim();
+
+      // Проверка имени
+      if (!name) {
+        nameInput.classList.add('error');
+        nameError.style.display = 'block';
+        isValid = false;
+      }
+
+      // Проверка номера телефона
+      // Регулярное выражение для +380XXXXXXXXX (12 цифр после +)
+      const phonePattern = /^\+380\d{9}$/; 
+      if (!phonePattern.test(phone)) {
+        phoneInput.classList.add('error');
+        phoneError.style.display = 'block';
+        isValid = false;
+      }
+
+      if (!isValid) {
+        return; // Остановить отправку формы, если есть ошибки
       }
 
       // Показати індикатор завантаження та вимкнути кнопку
       submitButton.disabled = true;
       submitButton.innerHTML = 'Надсилання... <span class="form-loading-spinner"></span>';
 
-      // Указываем путь к нашей Netlify Function
       const backendUrl = '/.netlify/functions/send-telegram-message'; 
 
       try {
@@ -569,11 +627,11 @@
 
         const data = await response.json();
 
-        if (response.ok && data.success) { // Проверяем и статус ответа, и поле success
-          alert('Дякуємо! Ми зв’яжемось з вами найближчим часом.');
-          document.getElementById('contactForm').reset();
+        if (response.ok && data.success) {
+          // *** ВОТ ГЛАВНОЕ ИЗМЕНЕНИЕ: Перенаправляем на страницу "Спасибо" ***
+          window.location.href = 'thank-you.html'; 
+          // Событие Facebook Pixel 'Lead' будет отслеживаться на странице thank-you.html
         } else {
-          // Если ответ не OK (например, 400, 500) или success: false
           alert(`Сталася помилка: ${data.message || 'Невідома помилка'}`);
           console.error('Backend Error:', data.message || data);
         }
@@ -581,11 +639,23 @@
         alert('Сталася помилка при надсиланні запиту до сервера. Перевірте підключення або спробуйте пізніше.');
         console.error('Network or Server Error:', error);
       } finally {
-        // Завжди повертаємо кнопку в початковий стан
+        // Если произойдет ошибка, то кнопка вернется в исходное состояние
+        // Если редирект успешен, эта часть кода не выполнится, так как страница изменится.
         submitButton.disabled = false;
         submitButton.innerHTML = 'Надіслати';
       }
     });
+
+    // *** УДАЛЕНЫ обработчики событий для закрытия модального окна, так как оно больше не используется. ***
+    // document.querySelector('#thankYouModal .close-button').addEventListener('click', function() {
+    //   document.getElementById('thankYouModal').style.display = 'none';
+    // });
+    // window.addEventListener('click', function(event) {
+    //   const thankYouModal = document.getElementById('thankYouModal');
+    //   if (event.target === thankYouModal) {
+    //     thankYouModal.style.display = 'none';
+    //   }
+    // });
   </script>
 
   <script>
