@@ -1029,8 +1029,8 @@
 
                 <button type="submit" id="submitButton">Надіслати</button>
             </form>
-            <div class="social-links">
-                <p>Або напишіть нам у соціальних мережах:</p>
+            <p style="margin-top: 25px;">Або напишіть нам у соціальних мережах:</p>
+            <div class="social-links" style="margin-top: 10px; display: flex; justify-content: center; gap: 15px;">
                 <a href="https://www.facebook.com/profile.php?id=61576710871971" target="_blank" class="social-button facebook-button" aria-label="Написати у Facebook">
                     <i class="fab fa-facebook-messenger"></i> Написати у Facebook
                 </a>
@@ -1147,10 +1147,12 @@
                     alert(`Сталася помилка: ${data.message || 'Невідома помилка'}`);
                     console.error('Backend Error:', data.message || data);
                 }
-            } catch (error) {
+            }
+            catch (error) {
                 alert('Сталася помилка при надсиланні запиту до сервера. Перевірте підключення або спробуйте пізніше.');
                 console.error('Network or Server Error:', error);
-            } finally {
+            }
+            finally {
                 // Повертаємо кнопку в початковий стан
                 submitButton.disabled = false;
                 submitButton.innerHTML = 'Надіслати';
