@@ -191,7 +191,24 @@
         footer a:hover {
             text-decoration: underline;
         }
+        
+        .social-links {
+            margin-top: 20px;
+            text-align: center;
+        }
 
+        .social-links a {
+            display: inline-block;
+            margin: 0 10px;
+            font-size: 2rem;
+            color: var(--primary-color);
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--tertiary-color);
+            transform: translateY(-3px);
+        }
         /* Відгуки */
         .testimonials-container {
             display: flex;
@@ -555,6 +572,11 @@
                 padding: 10px 15px;
                 font-size: 0.9rem;
             }
+
+            .social-links a {
+                font-size: 1.8rem;
+                margin: 0 8px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -702,6 +724,11 @@
 
                 <button type="submit" id="submitButton">Надіслати</button>
             </form>
+            <div class="social-links">
+                <p>Або напишіть нам у соціальних мережах:</p>
+                <a href="https://www.facebook.com/yourprofile" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                <a href="https://t.me/yourtelegram" target="_blank" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
+            </div>
         </section>
 
         <section id="privacy" class="fade-in">
@@ -726,7 +753,12 @@
     </main>
 
     <footer>
-        <p>© 2025 Допомога чоловікам. Всі права захищені. <a href="#privacy">Політика конфіденційності та Умови використання</a></p>
+        <p>© 2025 Допомога чоловікам. Всі права захищені.</p>
+        <div class="social-links footer-social-links">
+            <a href="https://www.facebook.com/yourprofile" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+            <a href="https://t.me/yourtelegram" target="_blank" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
+        </div>
+        <p><a href="#privacy">Політика конфіденційності та Умови використання</a></p>
     </footer>
 
     <div class="floating-cta-bar">
@@ -838,9 +870,6 @@
                     const faqContent = faqItem.querySelector('.faq-content');
 
                     button.classList.toggle('active');
-                    faqContent.classList.toggle('active');
-
-                    // Встановлення max-height для анімації розгортання/згортання
                     if (faqContent.classList.contains('active')) {
                         faqContent.style.maxHeight = faqContent.scrollHeight + 'px';
                     } else {
