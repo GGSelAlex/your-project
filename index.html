@@ -1,19 +1,6 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17155345980"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'AW-17155345980');
-        gtag('event', 'conversion', {
-            'send_to': 'AW-17155345980/gFQICKSWuNMaELycp_Q_',
-            'value': 25.0,
-            'currency': 'UAH'
-        });
-    </script>
-
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Виїзд 2025: Допоможемо виїхати за кордон — індивідуальні рішення для кожного</title>
@@ -29,7 +16,6 @@
     <meta property="og:locale" content="uk_UA" />
 
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -596,21 +582,6 @@
 </head>
 
 <body>
-    <script>
-        !function(f,b,e,v,n,t,s)
-        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-        n.queue=[];t=b.createElement(e);t.async=!0;
-        t.src=v;s=b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t,s)}(window, document,'script',
-        'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', 'YOUR_PIXEL_ID'); // Замените YOUR_PIXEL_ID на ваш реальный ID пикселя Facebook
-        fbq('track', 'PageView');
-    </script>
-    <noscript><img height="1" width="1" style="display:none"
-        src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"
-    /></noscript>
     <nav class="navbar">
         <button class="menu-toggle" id="menuToggle" aria-label="Відкрити меню">
             <i class="fas fa-bars"></i>
@@ -839,113 +810,65 @@
             }
         });
 
-        // JavaScript для маски вводу телефону
-        document.addEventListener('DOMContentLoaded', function() {
-            const phoneInput = document.getElementById('phone');
-
-            phoneInput.addEventListener('input', function (e) {
-                let value = phoneInput.value.replace(/\D/g, ''); // Видаляємо всі нецифрові символи
-
-                // Забезпечуємо, що починається з "+380"
-                if (!value.startsWith('380') && value.length > 0) {
-                    value = '380' + value;
-                } else if (value.startsWith('0') && value.length > 1) {
-                    // Якщо користувач почав з '0' (без '+380'), замінюємо на '380'
-                    value = '38' + value; // Це може бути "380" + решта
-                }
-
-                // Обмеження до 12 символів (380 + 9 цифр)
-                if (value.length > 12) {
-                    value = value.substring(0, 12);
-                }
-
-                let formattedValue = '+';
-                if (value.length > 0) {
-                    formattedValue += value;
-                }
-
-                phoneInput.value = formattedValue;
-            });
-
-            // Перевірка при фокусі, щоб завжди було "+380"
-            phoneInput.addEventListener('focus', function() {
-                if (!phoneInput.value.startsWith('+380')) {
-                    phoneInput.value = '+380';
-                }
-                // Переміщуємо курсор в кінець введеного тексту
-                setTimeout(() => {
-                    phoneInput.setSelectionRange(phoneInput.value.length, phoneInput.value.length);
-                }, 0);
-            });
-
-            // Ініціалізація при завантаженні сторінки
-            if (!phoneInput.value.startsWith('+380') && phoneInput.value.length === 0) {
-                phoneInput.value = '+380';
-            }
-        });
-
-        // Логіка для розкриття/згортання FAQ
-        document.querySelectorAll('.faq-toggle').forEach(button => {
-            button.addEventListener('click', () => {
-                const faqContent = button.parentNode.nextElementSibling;
-                button.classList.toggle('active');
-                faqContent.classList.toggle('active');
-                if (faqContent.classList.contains('active')) {
-                    faqContent.style.maxHeight = faqContent.scrollHeight + "px";
-                } else {
-                    faqContent.style.maxHeight = "0";
-                }
-            });
-        });
-
-        // Анімація Fade-in при скролі
-        function onScrollReveal() {
-            const elements = document.querySelectorAll('.fade-in');
-            const triggerBottom = window.innerHeight * .85; // Елементи з'являються, коли 85% вікна пройдено
-            elements.forEach(el => {
-                const boxTop = el.getBoundingClientRect().top;
-                if (boxTop < triggerBottom) {
-                    el.classList.add('visible');
-                }
-            });
-        }
-        window.addEventListener('scroll', onScrollReveal);
-        window.addEventListener('load', onScrollReveal); // Перевірити при завантаженні сторінки
-
-        // Плавний скрол по посиланнях навігації
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-
-                // Закриття мобільного меню при кліку на посилання
-                const mainMenu = document.getElementById('mainMenu');
-                const menuToggle = document.getElementById('menuToggle');
-                if (mainMenu.classList.contains('active')) {
-                    mainMenu.classList.remove('active');
-                    menuToggle.classList.remove('active');
-                }
-
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        // Логіка для кнопки мобільного меню
-        document.addEventListener('DOMContentLoaded', function() {
+        // JavaScript для роботи меню-гамбургера та розгортання FAQ
+        document.addEventListener('DOMContentLoaded', () => {
             const menuToggle = document.getElementById('menuToggle');
             const mainMenu = document.getElementById('mainMenu');
+            const faqToggles = document.querySelectorAll('.faq-toggle');
+            const fadeInElements = document.querySelectorAll('.fade-in');
 
-            if (menuToggle && mainMenu) {
-                menuToggle.addEventListener('click', function() {
-                    mainMenu.classList.toggle('active');
-                    menuToggle.classList.toggle('active'); // Також можна активувати для зміни іконки
+            // Мобільне меню
+            menuToggle.addEventListener('click', () => {
+                mainMenu.classList.toggle('active');
+            });
+
+            // Закриття меню при кліку на посилання (для мобільних)
+            document.querySelectorAll('#mainMenu a').forEach(item => {
+                item.addEventListener('click', () => {
+                    if (mainMenu.classList.contains('active')) {
+                        mainMenu.classList.remove('active');
+                    }
                 });
-            }
+            });
+
+            // Розгортання/згортання FAQ
+            faqToggles.forEach(button => {
+                button.addEventListener('click', () => {
+                    const faqItem = button.closest('.faq-item');
+                    const faqContent = faqItem.querySelector('.faq-content');
+
+                    button.classList.toggle('active');
+                    faqContent.classList.toggle('active');
+
+                    // Встановлення max-height для анімації розгортання/згортання
+                    if (faqContent.classList.contains('active')) {
+                        faqContent.style.maxHeight = faqContent.scrollHeight + 'px';
+                    } else {
+                        faqContent.style.maxHeight = '0';
+                    }
+                });
+            });
+
+            // Анімація появи елементів при прокрутці
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            fadeInElements.forEach(element => {
+                observer.observe(element);
+            });
         });
     </script>
-
-    <script src="https://static.elfsight.com/platform/platform.js" async></script>
-    <div class="elfsight-app-3ef1f921-671e-4cf5-8e2e-985230550554" data-elfsight-app-lazy></div>
 </body>
 </html>
