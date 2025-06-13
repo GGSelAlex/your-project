@@ -35,6 +35,8 @@
             --shadow-strong: rgba(0,0,0,.2);
             --border-color: #ccc;
             --error-color: red;
+            --price-tag-bg: #f39c12; /* Помаранчевий для цін */
+            --price-tag-text: white;
         }
 
         body {
@@ -641,6 +643,10 @@
                 width: 90%; /* Ширші кнопки на мобільних */
                 box-sizing: border-box; /* Враховуємо padding у ширині */
             }
+            /* Ціни */
+            .pricing-card {
+                flex-basis: 100%; /* Картки повної ширини на мобільних */
+            }
 
         }
 
@@ -709,6 +715,90 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 12px rgba(0, 136, 204, 0.4);
         }
+
+        /* Стилі для блоку цін */
+        .pricing-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .pricing-card {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0,0,0,.08);
+            padding: 30px;
+            flex: 1;
+            min-width: 300px; /* Мінімальна ширина картки */
+            max-width: 400px; /* Максимальна ширина картки */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 5px solid var(--primary-color);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,.12);
+        }
+
+        .pricing-card h3 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .price-tag {
+            background: var(--price-tag-bg);
+            color: var(--price-tag-text);
+            font-size: 2.2rem;
+            font-weight: 700;
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin: 20px auto;
+            display: table; /* Щоб центровати блок */
+            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .pricing-card ul {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 25px;
+        }
+
+        .pricing-card ul li {
+            font-size: 1rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        .pricing-card ul li i {
+            color: var(--secondary-color); /* Зелена галочка */
+            margin-right: 10px;
+            font-size: 1.1rem;
+            margin-top: 3px; /* Для вирівнювання з текстом */
+        }
+
+        .pricing-card .cta-button {
+            display: block;
+            width: fit-content;
+            margin: 20px auto 0;
+            padding: 12px 25px;
+            font-size: 1.05rem;
+        }
+
+        .pricing-card .cta-button:hover {
+            transform: translateY(-3px);
+        }
     </style>
 </head>
 
@@ -721,7 +811,7 @@
             <li><a href="#mission">Наша Місія</a></li>
             <li><a href="#about">Про нас</a></li>
             <li><a href="#services">Послуги</a></li>
-            <li><a href="#testimonials">Відгуки</a></li>
+            <li><a href="#pricing">Ціни</a></li> <li><a href="#testimonials">Відгуки</a></li>
             <li><a href="#faq">ЧАПи</a></li>
             <li><a href="#contact">Контакти</a></li>
         </ul>
@@ -773,6 +863,58 @@
             </ul>
             <div class="section-cta">
                 <a href="#contact" class="cta-button">Записатись на консультацію</a>
+            </div>
+        </section>
+
+        <section id="pricing" class="fade-in">
+            <h2>Наші Тарифи та Послуги</h2>
+            <p>Ми пропонуємо прозорі ціни на найпопулярніші послуги, що допоможуть вам у законному виїзді за кордон. Кожна послуга включає повний супровід та гарантію законності.</p>
+            <div class="pricing-container">
+                <div class="pricing-card">
+                    <h3>Білий квиток</h3>
+                    <div class="price-tag">3600$</div>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Допомога в оформленні Білого Квитка з повним виключенням з військового обліку</li>
+                        <li><i class="fas fa-check-circle"></i> Термін виготовлення: 14-16 днів</li>
+                        <li><i class="fas fa-check-circle"></i> Підберемо статтю яка вам більше підходить</li>
+                        <li><i class="fas fa-check-circle"></i> Виключення з військового обліку через хворобу</li>
+                        <li><i class="fas fa-check-circle"></i> Робимо заключення ВЛК про непридатність у мирний та воєнний час</li>
+                        <li><i class="fas fa-check-circle"></i> З документальним підтвердженням дозволу на виїзд</li>
+                        <li><i class="fas fa-check-circle"></i> З Білим Квитком ви можете перетинати кордон та вільно пересуватися по Україні.</li>
+                        <li><i class="fas fa-check-circle"></i> Офіційний документ з внесенням в базу</li>
+                    </ul>
+                    <a href="#contact" class="cta-button">Отримати послугу</a>
+                </div>
+
+                <div class="pricing-card">
+                    <h3>Інвалідність</h3>
+                    <div class="price-tag">3700$</div>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Інвалідність 2-ї та 3-ї групи</li>
+                        <li><i class="fas fa-check-circle"></i> Термін оформлення: 14-18 днів</li>
+                        <li><i class="fas fa-check-circle"></i> На основі медичного огляду, медичної картки, та інших медичних документів, довідок МСЕК</li>
+                        <li><i class="fas fa-check-circle"></i> Видається друга або третя група інвалідності</li>
+                        <li><i class="fas fa-check-circle"></i> Терміни: від 1 до 3 років та Безстроково з урахуванням всіх можливих обставин</li>
+                        <li><i class="fas fa-check-circle"></i> Відстрочка від мобілізації на цей термін, повне проведення по базах, реєстрах та з призначенням пенсійних виплат</li>
+                    </ul>
+                    <a href="#contact" class="cta-button">Отримати послугу</a>
+                </div>
+
+                <div class="pricing-card">
+                    <h3>Розписка</h3>
+                    <div class="price-tag">1600$</div>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Розписка - про вилучення ваших військово-облікових документів для внесення облікових записів</li>
+                        <li><i class="fas fa-check-circle"></i> Вам надається право безперешкодного пересування по Україні без отримання повістки</li>
+                        <li><i class="fas fa-check-circle"></i> Розписка надається терміном максимально до 4-х місяців (120 днів)</li>
+                        <li><i class="fas fa-check-circle"></i> Термін оформлення 3-6 днів</li>
+                    </ul>
+                    <a href="#contact" class="cta-button">Отримати послугу</a>
+                </div>
+            </div>
+            <div class="section-cta">
+                <p>Не знайшли потрібної послуги? Зв'яжіться з нами для індивідуального рішення.</p>
+                <a href="#contact" class="cta-button">Отримати безкоштовну консультацію</a>
             </div>
         </section>
 
@@ -997,13 +1139,25 @@
                     const faqContent = faqItem.querySelector('.faq-content');
 
                     button.classList.toggle('active');
+                    // Закриваємо всі інші відкриті FAQ
+                    document.querySelectorAll('.faq-content.active').forEach(openContent => {
+                        if (openContent !== faqContent) {
+                            openContent.classList.remove('active');
+                            openContent.style.maxHeight = '0';
+                            openContent.closest('.faq-item').querySelector('.faq-toggle').classList.remove('active');
+                        }
+                    });
+
+                    // Відкриваємо/закриваємо поточний FAQ
+                    faqContent.classList.toggle('active');
                     if (faqContent.classList.contains('active')) {
-                        faqContent.style.maxHeight = faqContent.scrollHeight + 'px';
+                        faqContent.style.maxHeight = faqContent.scrollHeight + 'px'; // Встановлюємо фактичну висоту контенту
                     } else {
                         faqContent.style.maxHeight = '0';
                     }
                 });
             });
+
 
             // Анімація появи елементів при прокрутці
             const observerOptions = {
